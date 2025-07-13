@@ -2,11 +2,13 @@ package med.voll.api.domain.Consulta.Validaciones;
 
 import med.voll.api.domain.Consulta.DatosReservarConsulta;
 import med.voll.api.domain.ValidacionException;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class ValidadorConsultaConAnticipacion {
+@Component
+public class ValidadorConsultaConAnticipacion implements ValidadorDeConsultas{
 
     public void validar(DatosReservarConsulta datos) {
         var fechaConsulta = datos.fecha();
