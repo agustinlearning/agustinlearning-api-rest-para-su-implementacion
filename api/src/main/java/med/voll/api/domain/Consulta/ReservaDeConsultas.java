@@ -11,40 +11,42 @@ import org.springframework.stereotype.Service;
 public class ReservaDeConsultas {
 
     @Autowired
-    private ConsultaRepository consultaRepository;
-
-    @Autowired
     private MedicoRepository medicoRepository;
 
     @Autowired
     private PacienteRepository pacienteRepository;
 
-    public void reservar(DatosReservarConsulta datos) {
+    @Autowired
+    private ConsultaRepository consultaRepository;
 
-        if(!pacienteRepository.existsById(datos.idPaciente())) {
-            throw new ValidacionException("No existe un paciente con el id proporcionado");
+    public void reservar(DatosReservarConsulta datos){
+
+        if(!pacienteRepository.existsById(datos.idPaciente())){
+            throw new ValidacionException("No existe un paciente con el id informado");
         }
+
         if(datos.idMedico() != null && !medicoRepository.existsById(datos.idMedico())){
-            throw new ValidacionException("No existe un Medico con el id proporcionado");
+            throw new ValidacionException("No existe un médico con el id informado");
         }
 
-        var medico = eligirMedico(datos);
+        var medico = elegirMedico(datos);
         var paciente = pacienteRepository.findById(datos.idPaciente()).get();
-
         var consulta = new Consulta(null, medico, paciente, datos.fecha(), null);
-
         consultaRepository.save(consulta);
     }
 
-    private Medico eligirMedico(DatosReservarConsulta datos) {
-        if(datos.idMedico() != null) {
+    private Medico elegirMedico(DatosReservarConsulta datos) {
+
+        if(datos.idMedico() != null){
             return medicoRepository.getReferenceById(datos.idMedico());
         }
-        if(datos.especialidad() == null) {
-            throw new ValidacionException("Es necesario elegir una especialidad cuando no se especifica un medico");
+
+        if(datos.especialidad() == null){
+            throw new ValidacionException("Es necesario elegir una especialidad cuando no se elige un médico");
         }
 
-        return MedicoRepository.elegirMedicoAleatorioDisponibleEnLaFecha(datos.especialidad(), datos.fecha());
+        return medicoRepository.elegirMedicoAleatorioDisponibleEnLaFecha(datos.especialidad(), datos.fecha());
+
 
     }
 
@@ -55,4 +57,6 @@ public class ReservaDeConsultas {
         var consulta = consultaRepository.getReferenceById(datos.idConsulta());
         consulta.cancelar(datos.motivo());
     }
+
 }
+
