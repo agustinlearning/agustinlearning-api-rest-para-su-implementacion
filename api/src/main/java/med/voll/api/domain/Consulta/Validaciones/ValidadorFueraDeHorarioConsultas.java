@@ -5,7 +5,7 @@ import med.voll.api.domain.ValidacionException;
 
 import java.time.DayOfWeek;
 
-public class ValidacionFueraDeHorarioConsultas {
+public class ValidadorFueraDeHorarioConsultas {
     public void validar(DatosReservarConsulta datos){
         var fechaConsulta = datos.fecha();
         var domingo = fechaConsulta.getDayOfWeek().equals(DayOfWeek.SUNDAY);
