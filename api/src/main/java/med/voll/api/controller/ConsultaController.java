@@ -20,10 +20,11 @@ public class ConsultaController {
     @PostMapping
     @Transactional
     public ResponseEntity reservar(@RequestBody @Valid DatosReservarConsulta datos){
-        reserva.reservar(datos);
 
-        System.out.println(datos);
-        return ResponseEntity.ok(new DatosDetallesConsulta(null, null, null, null));
+
+        var detalleConsulta = reserva.reservar(datos);
+
+        return ResponseEntity.ok(detalleConsulta);
     }
 
     @DeleteMapping
