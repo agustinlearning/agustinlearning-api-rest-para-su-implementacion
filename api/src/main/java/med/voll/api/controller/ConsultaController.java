@@ -1,8 +1,8 @@
 package med.voll.api.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import med.voll.api.domain.Consulta.DatosCancelamientoConsulta;
-import med.voll.api.domain.Consulta.DatosDetallesConsulta;
 import med.voll.api.domain.Consulta.DatosReservarConsulta;
 import med.voll.api.domain.Consulta.ReservaDeConsultas;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("consultas")
+@SecurityRequirement(name = "bearer-key")
 public class ConsultaController {
 
     @Autowired
