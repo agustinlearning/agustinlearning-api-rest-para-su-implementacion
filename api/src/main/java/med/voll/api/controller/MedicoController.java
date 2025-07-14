@@ -16,16 +16,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping("/medicos")
 @SecurityRequirement(name = "bearer-key")
-public class MedicosController {
+public class MedicoController {
 
     @Autowired
-    MedicoRepository repository;
+    MedicoRepository medicoRepository;
 
     @Transactional
     @PostMapping
     public ResponseEntity registrar(@RequestBody @Valid DatosRegistroMedico datos, UriComponentsBuilder uriComponentsBuilder){
         var medico = new Medico(datos);
-        repository.save(medico);
+        medicoRepository.save(medico);
 
         var uri = uriComponentsBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
 
@@ -33,7 +33,7 @@ public class MedicosController {
     }
     @GetMapping
     public ResponseEntity<Page<DatosListaMedicos>> listar(@PageableDefault(size=10, sort={"nombre"}) Pageable paginacion){
-        var page = repository.findAllByActivoTrue(paginacion).map(DatosListaMedicos::new);
+        var page = medicoRepository.findAllByActivoTrue(paginacion).map(DatosListaMedicos::new);
 
         return ResponseEntity.ok(page);
     }
@@ -41,11 +41,13 @@ public class MedicosController {
     @Transactional
     @PutMapping
     public ResponseEntity actualizar(@RequestBody @Valid DatosActualizacionMedico datos){
-        var medico = repository.getReferenceById(datos.id());
+        var medico = medicoRepository.getReferenceById(datos.id());
         medico.actualizarInformaciones(datos);
 
         return ResponseEntity.ok(new DatosDetallesMedico(medico));
     }
+
+
 
     // para hacer una eliminacion fisica del medico
 //    @Transactional
@@ -58,7 +60,7 @@ public class MedicosController {
     @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity eliminar(@PathVariable Long id){
-        var medico = repository.getReferenceById(id);
+        var medico = medicoRepository.getReferenceById(id);
         medico.elimiar();
 
         return ResponseEntity.noContent().build();
@@ -66,7 +68,7 @@ public class MedicosController {
 
     @GetMapping("/{id}")
     public ResponseEntity detallar(@PathVariable Long id){
-        var medico = repository.getReferenceById(id);
+        var medico = medicoRepository.getReferenceById(id);
 
         return ResponseEntity.ok(new DatosDetallesMedico(medico));
     }

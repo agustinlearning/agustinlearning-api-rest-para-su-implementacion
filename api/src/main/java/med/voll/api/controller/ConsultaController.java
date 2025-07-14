@@ -28,10 +28,11 @@ public class ConsultaController {
         return ResponseEntity.ok(detalleConsulta);
     }
 
-    @DeleteMapping
-    @Transactional
-    public ResponseEntity cancelar(@RequestBody @Valid DatosCancelamientoConsulta datos) {
-        reserva.cancelar(datos);
-        return ResponseEntity.noContent().build();
-    }
+    //Tratar el cancelamiento de la consulta mas tarde
+//    @DeleteMapping
+//    @Transactional
+//    public ResponseEntity cancelar(@RequestBody @Valid DatosCancelamientoConsulta datos) {
+//        reserva.cancelar(datos);
+//        return ResponseEntity.noContent().build();
+//    }
 }
