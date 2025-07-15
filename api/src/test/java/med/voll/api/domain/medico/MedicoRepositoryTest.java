@@ -36,7 +36,6 @@ class MedicoRepositoryTest {
     void elegirMedicoAleatorioDisponibleEnLaFechaEscenario1() {
 
         var lunesSiguienteALas10 = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).atTime(10, 0);
-
         var medico = registrarMedico("Medico1", "medico@gmail.com", "12345", Especialidad.CARDIOLOGIA);
         var paciente = registrarPaciente("Paciente1", "paciente@gmail.com", "123789");
         registrarCosnulta(medico, paciente, lunesSiguienteALas10);
@@ -45,8 +44,19 @@ class MedicoRepositoryTest {
         assertThat(medicoLibre).isNull();
     }
 
+    @Test
+    @DisplayName("Deberia devolver medico cuando el medico buscado esta disponible en esa fecha")
+    void elegirMedicoAleatorioDisponibleEnLaFechaEscenario2() {
+
+        var lunesSiguienteALas10 = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).atTime(10, 0);
+        var medico = registrarMedico("Medico1", "medico@gmail.com", "12345", Especialidad.CARDIOLOGIA);
+
+        var medicoLibre = repository.elegirMedicoAleatorioDisponibleEnLaFecha(Especialidad.CARDIOLOGIA, lunesSiguienteALas10);
+        assertThat(medicoLibre).isEqualTo(medico);
+    }
+
     private void registrarCosnulta(Medico medico, Paciente paciente, LocalDateTime fecha){
-        em.persist(new Consulta(null, medico, paciente, fecha));
+        em.persist(new Consulta(null, medico, paciente, fecha, null));
     }
 
     private Medico registrarMedico(String nombre, String email, String documento, Especialidad especialidad){
