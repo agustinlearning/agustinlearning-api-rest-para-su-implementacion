@@ -34,24 +34,26 @@ class MedicoRepositoryTest {
     @Test
     @DisplayName("Deberia devolver null cuando el medico buscado existe, pero no esta disponible en esa fecha")
     void elegirMedicoAleatorioDisponibleEnLaFechaEscenario1() {
-
+        // given o arrange
         var lunesSiguienteALas10 = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).atTime(10, 0);
         var medico = registrarMedico("Medico1", "medico@gmail.com", "12345", Especialidad.CARDIOLOGIA);
         var paciente = registrarPaciente("Paciente1", "paciente@gmail.com", "123789");
         registrarCosnulta(medico, paciente, lunesSiguienteALas10);
-
+        //when o act
         var medicoLibre = repository.elegirMedicoAleatorioDisponibleEnLaFecha(Especialidad.CARDIOLOGIA, lunesSiguienteALas10);
+        //tehn o assert
         assertThat(medicoLibre).isNull();
     }
 
     @Test
     @DisplayName("Deberia devolver medico cuando el medico buscado esta disponible en esa fecha")
     void elegirMedicoAleatorioDisponibleEnLaFechaEscenario2() {
-
+        // given o arrange
         var lunesSiguienteALas10 = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY)).atTime(10, 0);
         var medico = registrarMedico("Medico1", "medico@gmail.com", "12345", Especialidad.CARDIOLOGIA);
-
+        //when o act
         var medicoLibre = repository.elegirMedicoAleatorioDisponibleEnLaFecha(Especialidad.CARDIOLOGIA, lunesSiguienteALas10);
+        //tehn o assert
         assertThat(medicoLibre).isEqualTo(medico);
     }
 
