@@ -8,7 +8,7 @@ public record DatosDireccion(
         String numero,
         String complemento,
         @NotBlank String barrio,
-        @NotBlank @Pattern(regexp = "\\d{4}")String codigo_postal,
-        @NotBlank String ciudad, //este 4 sigue el patron de argentina (cambiar segun el pais   )
+        @NotBlank @Pattern(regexp = "\\d{4}")String codigo_postal, //este 4 sigue el patron de argentina (cambiar segun el pais   )
+        @NotBlank String ciudad,
         @NotBlank String estado) {
 }
