@@ -56,7 +56,7 @@ class MedicoRepositoryTest {
     }
 
     private void registrarCosnulta(Medico medico, Paciente paciente, LocalDateTime fecha){
-        em.persist(new Consulta(null, medico, paciente, fecha, null));
+        em.persist(new Consulta(null, medico, paciente, fecha));
     }
 
     private Medico registrarMedico(String nombre, String email, String documento, Especialidad especialidad){

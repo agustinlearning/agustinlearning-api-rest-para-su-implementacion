@@ -65,14 +65,14 @@ public class ReservaDeConsultas {
 
     }
 
-    //Tratar el cancelamiento de la consulta mas tarde
-    public void cancelar(DatosCancelamientoConsulta datos) {
-        if (!consultaRepository.existsById(datos.idConsulta())) {
-            throw new ValidacionException("Id de la consulta informado no existe!");
-        }
-        var consulta = consultaRepository.getReferenceById(datos.idConsulta());
-        consulta.cancelar(datos.motivo());
-    }
+    //Preparando la posibilidad de cancelar conultas para mas tarde
+//    public void cancelar(DatosCancelamientoConsulta datos) {
+//        if (!consultaRepository.existsById(datos.idConsulta())) {
+//            throw new ValidacionException("Id de la consulta informado no existe!");
+//        }
+//        var consulta = consultaRepository.getReferenceById(datos.idConsulta());
+//        consulta.cancelar(datos.motivo());
+//    }
 
 }
 
